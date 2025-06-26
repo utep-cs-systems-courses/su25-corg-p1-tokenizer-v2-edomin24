@@ -58,7 +58,7 @@ char *get_history(List *list, int id)
   Item *p = list -> root;
   while (p){
     if (p -> id == id){
-      return p _> str;
+      return p -> str;
     }
 
     p = p -> next;
