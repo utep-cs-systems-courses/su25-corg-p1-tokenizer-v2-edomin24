@@ -72,7 +72,7 @@ void print_history(List *list)
 {
   Item *temp = list -> root;
   while(temp){
-    printf("%dL %s\n", temp ->id, temp -> str);
+    printf("%d\t%s\n", temp ->id, temp -> str);
     temp = temp -> next;
   }
 }
