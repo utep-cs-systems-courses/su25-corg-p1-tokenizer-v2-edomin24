@@ -1,4 +1,4 @@
-OBJS = uimain.o tokenizer.o tester.o
+OBJS = uimain.o tokenizer.o history.o
 
 CFLAGS = -g -O3
 

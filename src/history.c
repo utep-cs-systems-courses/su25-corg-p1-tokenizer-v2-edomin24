@@ -8,7 +8,7 @@ List* init_history()
   List *list = malloc(sizeof(List));
   list -> root = 0;  /*new list is empty*/
   return list;
-
+}
 /* Add a history item to the end of the list.
    List* list - the linked list
    char* str - the string to store
@@ -26,7 +26,7 @@ void add_history(List *list, char *str)
   int len = 0;
   while(*p++) len++;
   
-  currEntry ->str = malloc(len + 1) * sizeof(char);
+  currEntry ->str = malloc((len + 1) * sizeof(char));
 
   char *src = str; /*copying the str */
   char *dst = currEntry -> str;
@@ -54,16 +54,13 @@ char *get_history(List *list, int id)
   if(!list){
     return 0;
   }
-
-  Item *p = list -> root;
-  while (p){
-    if (p -> id == id){
-      return p -> str;
+  Item *temp = list -> root;
+  while (temp){
+    if (temp -> id == id){
+      return temp -> str;
     }
-
-    p = p -> next;
+    temp = temp -> next;
   }
-
   return 0;
 }
 
@@ -87,6 +84,5 @@ void free_history(List *list)
     free(currEntry);
     currEntry = nextEntry;
   }
-
   free(list);
 }

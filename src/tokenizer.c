@@ -53,7 +53,7 @@ int count_tokens(char *str)
 char *copy_str(char *inStr, short len)
 {
 
-  char *cp = malloc(len+1) * sizeof(char);
+  char *cp = malloc((len+1) * sizeof(char));
   char *strStart= cp;
   
   while(len--){
