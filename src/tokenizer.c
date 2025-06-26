@@ -4,40 +4,28 @@
 
 int space_char(char c)
 {
-  if (c == 't' || c == ' '){
-      return 1;
-    }
-  return 0;
+  return (c == 't' || c == ' ');
 }
 
 int non_space_char(char c)
 {
-  if (!space_char(c)){
-    return 1;
-  }
-  return 0;
+  return !space_char(c);
 }
 
 char *token_start(char *str) 
 {
-  if (str == NULL){  
-    return NULL;
-  }
-  while(*str != '\0'){
+  while(*str){
     if(non_space_char(*str)){
       return str;
     }
     str++;
   }
-  return NULL;
+  return 0;
 }
 
-char *token_terminator(char *token){
-  if (token == NULL){
-    return NULL;
-  }
-
-  while(*token != '\0'){
+char *token_terminator(char *token)
+{
+  while(*token){
     if(space_char(*token)){
       return token;
     }
@@ -52,16 +40,11 @@ char *token_terminator(char *token){
 int count_tokens(char *str)
 {
   int count = 0;
-  
-  if(str == NULL){
-    return 0;
-  }
-
-  while ((str = token_start(str)) != NULL && *str != '\0'){
+ 
+  while ((str = token_start(str))){
     count++;
     str = token_terminator(str);
   }
-
   return count;
 } 
 
@@ -69,21 +52,16 @@ int count_tokens(char *str)
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len)
 {
-  if (inStr == NULL || len <= 0){
-    return NULL;
+
+  char *cp = malloc(len+1) * sizeof(char);
+  char *strStart= cp;
+  
+  while(len--){
+    *cp++ = *inStr++;
   }
 
-  char *cp = malloc(len+1);
-  if(cp == NULL){
-    return NULL;
-  }
-
-  for(int i = 0; i < len; i ++){
-    cp[i] = inStr[i];
-  }
-
-  cp[len] = '\0';
-  return cp;
+  *cp = 0;
+  return strStart;
 }
 
 /* Returns a freshly allocated zero-terminated vector of freshly allocated 
@@ -99,37 +77,28 @@ char **tokenize(char* str)
 {
   int count = count_tokens(str);
   if (count == 0){
-    return NULL;
+    return 0;
   }
 
   char **tokens = malloc((count + 1) * sizeof(char *));
-
-  if(tokens == NULL){
-    return NULL;
-  }
-
   int i = 0;
   char *s;
 
-  while ((s = token_start(s)) != NULL && *s != '\0'){
+  while ((s = token_start(str))){
     char *t = token_terminator(s);
     short len = t-s;
-
     tokens[i++] = copy_str(s, len);
-    s = t;
+    str = t;
   }
 
-  tokens[i] == NULL;
+  tokens[i] = 0;
   return tokens;
 }
-
 /* Prints all tokens. */
-void print_tokens(char **tokens){
-  if (tokens == NULL){
-    return;
-  }
-
-  for (int i = 0; tokens[i] != NULL; i++){
+void print_tokens(char **tokens)
+{
+  if (!tokens) return;
+  for (int i = 0; tokens[i]; i++){
     printf("%s\n", tokens[i]);
   }
 }
@@ -138,14 +107,10 @@ void print_tokens(char **tokens){
 /* Frees all tokens and the vector containing themx. */
  void free_tokens(char **tokens)
  {
-   if (tokens == NULL){
-     return;
-   }
-
-   for (int i = 0; tokens[i] != NULL; i++){
+   if (!tokens) return;
+   for (int i = 0; tokens[i]; i++){
      free(tokens[i]);
    }
-
    free(tokens);
  }
    

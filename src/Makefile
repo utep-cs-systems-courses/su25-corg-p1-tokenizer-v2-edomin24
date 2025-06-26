@@ -6,14 +6,14 @@ all: runner
 
 # Compile .o files from .c files
 
-uimain.o: uimain.c tokenizer.h
+uimain.o: uimain.c tokenizer.h history.h
 	cc $(CFLAGS) -c uimain.c
 
 tokenizer.o: tokenizer.c tokenizer.h
 	cc $(CFLAGS) -c tokenizer.c
 
-tester.o: tester.c tokenizer.h
-	cc $(CFLAGS) -c tester.c
+history.o: history.h history.c
+	cc $(CFLAGS) -c history.c
 
 runner: $(OBJS)
 	cc $(CFLAGS) -o runner $(OBJS)
