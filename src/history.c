@@ -47,7 +47,7 @@ void add_history(List *list, char *str)
       }
     
     currEntry -> id = prevEntry ->id +1;
-    currEntry -> next = prevEntry;
+    prevEntry -> next = currEntry;
   }
 }   
 /* Retrieve the string stored in the node where Item->id == id.

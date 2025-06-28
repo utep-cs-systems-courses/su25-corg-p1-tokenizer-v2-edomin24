@@ -48,7 +48,6 @@ int main()
 	  char *history_str = get_history(history, id); // get history by id
 	  if (history_str) {
 	    printf("%s\n", history_str);
-	    free(history_str);
 	  } else {
 	    printf("No history found for id %d.\n", id);
 	  }
