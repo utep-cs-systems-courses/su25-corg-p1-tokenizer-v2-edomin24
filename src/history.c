@@ -16,34 +16,38 @@ List* init_history()
 void add_history(List *list, char *str)
 {
   Item *currEntry = malloc(sizeof(Item));
-
-  if(!currEntry){
-    printf("No history available, Please add a sentence to add to History");
-    return;
-  }
-
   char *p = str;   /*find len of str*/
   int len = 0;
-  while(*p++) len++;
+  while(*p)
+    {
+      len++;
+      p++;
+    }
   
   currEntry ->str = malloc((len + 1) * sizeof(char));
-
   char *src = str; /*copying the str */
   char *dst = currEntry -> str;
-  while((*dst++ = *src++));
+  while(*src)
+    {
+      *dst++ = *src++;
+    }
   
+  *dst = '\0';
   currEntry -> next = 0;
 
   if(!list -> root){ 
-    list -> root = currEntry;
     currEntry -> id = 1;
+    list -> root = currEntry;
   } else{
     Item *prevEntry = list -> root;
-    while (prevEntry ->next){
-    prevEntry = prevEntry -> next;
-    }
-    currEntry -> next = prevEntry;
+    while (prevEntry ->next)
+      {
+	prevEntry = prevEntry -> next;
+
+      }
+    
     currEntry -> id = prevEntry ->id +1;
+    currEntry -> next = prevEntry;
   }
 }   
 /* Retrieve the string stored in the node where Item->id == id.
@@ -51,9 +55,6 @@ void add_history(List *list, char *str)
    int id - the id of the Item to find */
 char *get_history(List *list, int id)
 {
-  if(!list){
-    return 0;
-  }
   Item *temp = list -> root;
   while (temp){
     if (temp -> id == id){
@@ -61,15 +62,22 @@ char *get_history(List *list, int id)
     }
     temp = temp -> next;
   }
+  printf("No item found with id %d.\n", id);
   return 0;
 }
 
 /*Print the entire contents of the list. */
 void print_history(List *list)
 {
+  if (!list || !list -> root)
+    {
+      printf("History is empty, please add a sentence.\n");
+      return;
+    }
+  
   Item *temp = list -> root;
   while(temp){
-    printf("%d\t%s\n", temp ->id, temp -> str);
+    printf("%d | %s\n", temp ->id, temp -> str);
     temp = temp -> next;
   }
 }
@@ -77,6 +85,7 @@ void print_history(List *list)
 /*Free the history list and the strings it references. */
 void free_history(List *list)
 {
+  if(!list) return;
   Item *currEntry = list -> root;
   while(currEntry){
     Item *nextEntry = currEntry -> next;
@@ -85,4 +94,4 @@ void free_history(List *list)
     currEntry = nextEntry;
   }
   free(list);
-}
+}  
